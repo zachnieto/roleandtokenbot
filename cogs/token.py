@@ -23,6 +23,7 @@ class Token(commands.Cog):
         config = await Config.fetch(self.bot)
         role = inter.guild.get_role(config.role)
 
+        user.name = str(inter.author)
         user.enabled = role in inter.author.roles
         await user.save()
 

@@ -15,11 +15,16 @@ class User:
     def __init__(self, data: dict, bot: "Bot"):
         self.bot = bot
         self.id = data.get("_id")
+        self.name = data.get("name")
         self.api_token = data.get("api_token")
         self.enabled = data.get("enabled", False)
 
     def to_dict(self):
-        return {"api_token": self.api_token, "enabled": self.enabled}
+        return {
+            "name": self.name,
+            "api_token": self.api_token,
+            "enabled": self.enabled
+        }
 
     async def save(self):
         await self.bot.db.user.replace_one(
