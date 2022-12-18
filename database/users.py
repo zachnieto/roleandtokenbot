@@ -17,12 +17,14 @@ class User:
         self.id = data.get("_id")
         self.name = data.get("name")
         self.api_token = data.get("api_token")
+        self.secret_token = data.get("secret_token")
         self.enabled = data.get("enabled", False)
 
     def to_dict(self):
         return {
             "name": self.name,
             "api_token": self.api_token,
+            "secret_token": self.secret_token,
             "enabled": self.enabled
         }
 
