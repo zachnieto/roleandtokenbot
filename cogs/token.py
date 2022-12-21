@@ -55,7 +55,7 @@ class Token(commands.Cog):
                 required=True,
             )
             secret_token_input = TextInput(
-                label=f"Secret API",
+                label=f"API Secret",
                 placeholder=f"secret",
                 custom_id="secret_token_input",
                 min_length=1,
