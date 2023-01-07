@@ -1,6 +1,6 @@
 from typing import TYPE_CHECKING
 
-from disnake import ApplicationCommandInteraction, Permissions, Role
+from disnake import ApplicationCommandInteraction, Permissions, Role, TextChannel
 from disnake.ext import commands
 from disnake.ui import Button
 
@@ -55,4 +55,40 @@ class Staff(commands.Cog):
 
         await inter.send(
             f"Required role has been set to {role.mention}", ephemeral=True
+        )
+
+    @config.sub_command_group()
+    async def staff(self, inter: ApplicationCommandInteraction):
+        pass
+
+    @staff.sub_command(name="role")
+    async def staffrole(self, inter: ApplicationCommandInteraction, role: Role):
+        """Set the staff role to ping
+
+        Parameters
+        ----------
+        role: Staff role
+        """
+
+        config = await Config.fetch(self.bot)
+        config.staff_role = role.id
+        await config.save()
+
+        await inter.send(f"Staff role has been set to {role.mention}", ephemeral=True)
+
+    @staff.sub_command()
+    async def channel(self, inter: ApplicationCommandInteraction, channel: TextChannel):
+        """Set the staff channel to send alerts
+
+        Parameters
+        ----------
+        channel: The staff channel
+        """
+
+        config = await Config.fetch(self.bot)
+        config.staff_channel = channel.id
+        await config.save()
+
+        await inter.send(
+            f"Staff channel has been set to {channel.mention}", ephemeral=True
         )

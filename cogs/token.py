@@ -1,5 +1,9 @@
-from disnake import (ApplicationCommandInteraction, Interaction,
-                     MessageInteraction, ModalInteraction)
+from disnake import (
+    ApplicationCommandInteraction,
+    Interaction,
+    MessageInteraction,
+    ModalInteraction,
+)
 from disnake.ext import commands
 from disnake.ui import Modal, TextInput
 
@@ -33,7 +37,9 @@ class Token(commands.Cog):
         )
 
     @commands.slash_command()
-    async def token(self, inter: "ApplicationCommandInteraction", api_token: str, secret_token: str):
+    async def token(
+        self, inter: "ApplicationCommandInteraction", api_token: str, secret_token: str
+    ):
         """Links your API token with your account
 
         Parameters

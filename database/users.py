@@ -7,7 +7,9 @@ from bot import Bot
 
 class User:
     @classmethod
-    @cached(key_builder=lambda f, *args: f"user_cache_{args[1]}",)
+    @cached(
+        key_builder=lambda f, *args: f"user_cache_{args[1]}",
+    )
     async def fetch(cls, user_id: int, bot: "Bot"):
         data = {"_id": user_id}
         return cls(await bot.db.user.find_one(data) or data, bot)
@@ -25,7 +27,7 @@ class User:
             "name": self.name,
             "api_token": self.api_token,
             "secret_token": self.secret_token,
-            "enabled": self.enabled
+            "enabled": self.enabled,
         }
 
     async def save(self):

@@ -10,7 +10,5 @@ class Bot(commands.InteractionBot):
     def __init__(self, **options: Any):
         super().__init__(**options)
         load_dotenv()
-        db_client = motor.AsyncIOMotorClient(
-            os.getenv("MONGODB_URL")
-        )
+        db_client = motor.AsyncIOMotorClient(os.getenv("MONGODB_URL"))
         self.db = db_client.bot
