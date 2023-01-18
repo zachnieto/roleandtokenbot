@@ -5,11 +5,13 @@ from disnake import (
     ModalInteraction,
 )
 from disnake.ext import commands
-from disnake.ui import Modal, TextInput
+from disnake.ext.commands import MissingRole
+from disnake.ui import Modal, TextInput, Button
 
 from bot import Bot
 from database.config import Config
 from database.users import User
+from predicates import has_required_role, required_role_pred
 
 
 def setup(bot: "Bot"):
@@ -37,6 +39,7 @@ class Token(commands.Cog):
         )
 
     @commands.slash_command()
+    @has_required_role()
     async def token(
         self, inter: "ApplicationCommandInteraction", api_token: str, secret_token: str
     ):
@@ -52,6 +55,12 @@ class Token(commands.Cog):
     @commands.Cog.listener()
     async def on_button_click(self, inter: MessageInteraction):
         if inter.component.custom_id == "token_button":
+
+            try:
+                await required_role_pred(inter)
+            except MissingRole as e:
+                return await inter.send(str(e), ephemeral=True)
+
             token_input = TextInput(
                 label=f"API Token",
                 placeholder=f"token",
@@ -81,3 +90,17 @@ class Token(commands.Cog):
         api_token = inter.text_values["token_input"]
         secret_token = inter.text_values["secret_token_input"]
         await self.link_token(inter, api_token, secret_token)
+
+    @commands.slash_command()
+    @has_required_role()
+    async def linkbutton(self, inter: ApplicationCommandInteraction):
+        """Sends a button which opens a API token linking Modal upon click"""
+        await inter.channel.send(
+            components=[
+                Button(
+                    label="Link Token",
+                    custom_id="token_button",
+                )
+            ]
+        )
+        await inter.send(f"Button has been sent!", ephemeral=True)

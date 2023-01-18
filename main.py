@@ -1,6 +1,8 @@
 import os
 
 import disnake
+from disnake import ApplicationCommandInteraction
+from disnake.ext.commands import CheckFailure
 from dotenv import load_dotenv
 
 from bot import Bot
@@ -56,6 +58,15 @@ async def on_member_update(before: disnake.Member, after: disnake.Member):
             await channel.send(
                 content=staff_role.mention if staff_role else None, embed=embed
             )
+
+@bot.listen()
+async def on_slash_command_error(inter: ApplicationCommandInteraction, error):
+    error = getattr(error, "original", error)
+
+    if isinstance(error, CheckFailure):
+        return await inter.send(str(error), ephemeral=True)
+
+    raise error
 
 
 if __name__ == "__main__":

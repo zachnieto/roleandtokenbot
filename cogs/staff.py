@@ -20,19 +20,6 @@ class Staff(commands.Cog):
         self.bot = bot
 
     @commands.slash_command(default_member_permissions=Permissions(administrator=True))
-    async def linkbutton(self, inter: ApplicationCommandInteraction):
-        """Sends a button which opens a API token linking Modal upon click"""
-        await inter.channel.send(
-            components=[
-                Button(
-                    label="Link Token",
-                    custom_id="token_button",
-                )
-            ]
-        )
-        await inter.send(f"Button has been sent!", ephemeral=True)
-
-    @commands.slash_command(default_member_permissions=Permissions(administrator=True))
     async def config(self, inter: ApplicationCommandInteraction):
         pass
 
