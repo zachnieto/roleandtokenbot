@@ -66,7 +66,7 @@ class Token(commands.Cog):
                 placeholder=f"token",
                 custom_id="token_input",
                 min_length=1,
-                max_length=50,  # Probably some more precise requirements
+                max_length=100,  # Probably some more precise requirements
                 required=True,
             )
             secret_token_input = TextInput(
@@ -74,7 +74,7 @@ class Token(commands.Cog):
                 placeholder=f"secret",
                 custom_id="secret_token_input",
                 min_length=1,
-                max_length=50,  # Probably some more precise requirements
+                max_length=100,  # Probably some more precise requirements
                 required=True,
             )
             await inter.response.send_modal(
